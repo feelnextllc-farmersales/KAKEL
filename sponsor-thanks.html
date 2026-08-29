@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お申し込みありがとうございます｜KAKEL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
+<style>
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
+    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
+  }
+  a{color:inherit;}
+  .card{max-width:520px; width:100%; text-align:center; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius-lg); padding:44px 30px;}
+  .icon{width:72px; height:72px; margin:0 auto 22px; border-radius:50%; background:var(--secondary-soft); display:flex; align-items:center; justify-content:center;}
+  .icon svg{width:34px; height:34px;}
+  h1{font-family:var(--serif); font-weight:600; color:var(--primary-deep); font-size:clamp(20px,5vw,25px); line-height:1.6; margin:0 0 16px;}
+  p{color:var(--text-soft); font-size:15px; line-height:1.9; margin:0 0 14px;}
+  .status{font-size:13px; color:var(--text-soft); background:#F2EFE4; border-radius:999px; padding:8px 16px; display:inline-block; margin-bottom:20px;}
+  .actions{display:flex; flex-direction:column; gap:12px; margin-top:26px;}
+  .btn{padding:16px; border-radius:999px; font-weight:700; font-size:15px; text-decoration:none; display:block;}
+  .btn-primary{background:var(--primary); color:#fff;}
+  .btn-primary:hover{background:var(--primary-deep);}
+  .btn-ghost{border:1.5px solid #BEB79E; color:var(--primary-deep);}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 4L20 20M20 4L4 20" stroke="#173B2B" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="12" r="2.6" fill="#C49A62"/></svg>
+    </div>
+    <div class="status" id="statusLabel">決済状況を確認しています…</div>
+    <h1>スポンサーお申し込みを<br>受け付けました。</h1>
+    <p>ご入金の確認が取れ次第、運営より掲載内容についてご連絡いたします。KAKELを応援いただき、ありがとうございます。</p>
+    <div class="actions">
+      <a href="index.html" class="btn btn-primary">トップへ戻る</a>
+      <a href="index.html#sponsor" class="btn btn-ghost">スポンサーについてもう一度見る</a>
+    </div>
+  </div>
+
+<script>
+  // In production, verify payment status using the Stripe Checkout
+  // session id passed back on redirect, e.g.:
+  //
+  //   const params = new URLSearchParams(window.location.search);
+  //   const sessionId = params.get('session_id');
+  //   const res = await fetch('/verify-checkout-session?session_id=' + sessionId);
+  //   const { paid } = await res.json();
+  //
+  // This beta build has no backend, so it only reflects the query string
+  // for a friendlier demo state.
+  const params = new URLSearchParams(window.location.search);
+  const label = document.getElementById('statusLabel');
+  if(params.get('demo') === '1'){
+    label.textContent = 'β版デモ：決済連携は未実装です';
+  } else if(params.get('session_id')){
+    label.textContent = 'お申し込みを受け付けました';
+  } else {
+    label.textContent = 'お申し込みを受け付けました';
+  }
+  try{ sessionStorage.removeItem('kakelSponsorApplication'); }catch(e){}
+</script>
+</body>
+</html>
